@@ -18,13 +18,14 @@ app.MapGet("/q1", (string input) =>
 
 // Return the number (count) of vowels in the given string. Consider a, e, i, o, u as vowels.
 
-app.MapGet("/q2", ()=>{
+app.MapGet("/q2", () =>
+{
     string input = "amrit";
     char[] charArray = input.ToCharArray();
-            int vowelCount = 0;
-            for (int i = 0; i < input.Length; i++)
+    int vowelCount = 0;
+    for (int i = 0; i < input.Length; i++)
     {
-        if (input[i]  == 'a' || input[i] == 'e' || input[i] == 'i' || input[i] == 'o' || input[i] == 'u')
+        if (input[i] == 'a' || input[i] == 'e' || input[i] == 'i' || input[i] == 'o' || input[i] == 'u')
         {
             vowelCount++;
         }
@@ -55,10 +56,10 @@ app.MapGet("/q3", () =>
         }
         result[0] = negativeNumbers;
         result[1] = positiveNumbers;
-        
+
     }
 
-   Console.WriteLine($"Sum of negative numbers: {result[0]}. Multiplication of positive numbers: {result[1]}");
+    Console.WriteLine($"Sum of negative numbers: {result[0]}. Multiplication of positive numbers: {result[1]}");
 });
 /*
 4. Classical task
@@ -66,24 +67,26 @@ app.MapGet("/q3", () =>
 Create function Fibonacci that returns N'th element of Fibonacci sequence (classic programming task).
 */
 
-app.MapGet("/q4", (int n)=>{
+app.MapGet("/q4", (int n) =>
+{
 
-int nthNumber = Fibonacci(n); 
-Console.WriteLine($"Nth fibonacci number is {nthNumber}");
-return $"Nth fibonacci number is {nthNumber}";
+    int nthNumber = Fibonacci(n);
+    Console.WriteLine($"Nth fibonacci number is {nthNumber}");
+    return $"Nth fibonacci number is {nthNumber}";
 
-int Fibonacci(int num){
-    int a=0,b=1,c=0;
-    for(int i=2;i<n;i++){
-        c=a+b;
-        a=b;
-        b=c;
-        
+    int Fibonacci(int num)
+    {
+        int a = 0, b = 1, c = 0;
+        for (int i = 2; i < n; i++)
+        {
+            c = a + b;
+            a = b;
+            b = c;
+
+        }
+        return c;
     }
-    return c;
-}
 });
 
- 
 
 app.Run();
