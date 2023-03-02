@@ -61,34 +61,46 @@ Hint: use int.TryParse() and char.IsUpper()
 
 Example 1: GET /?input=153 would calculate 1 + 5 + 3 and return 9. Example 2: GET /?input=The Quick Brown Fox Jumps Over the Lazy Dog will return 8.*/
 
-// app.MapGet("/methods", (string input) => {
-//     var inputIsNumber = int.TryParse(input, out var _);
-//     if(inputIsNumber){
-//        return Results.Ok(AddNumbers(n));
-//     }else{
-//        return Results.Ok(CountCapitalLetters(input));
-//     }
+app.MapGet("/methods", (string input) => {
+    var inputIsNumber = int.TryParse(input, out var parseInput);
+    if(inputIsNumber){
+       return Results.Ok(AddNumbers(parseInput));
+    }else{
+       return Results.Ok(CountCapitalLetters(input));
+    }
 
-// });
+});
 
 
 
-// int AddNumbers(int n)
-// {
+int AddNumbers(int n)
+{
    
-// var digits = n.ToString().Select(t=>int.Parse(t.ToString())).ToArray();
-// Console.WriteLine(digits);
-// return digits;
-//    }
+//var digits = n.ToString().Select(t=>int.Parse(t.ToString())).ToArray();
+{
+    int sum = 0;
+    while (n > 0)
+    {
+      sum = sum + n % 10;//153%10=3,5
+      n = n / 10;//15
+    }
+    return sum;
+  }
 
-// }
+}
 
-// int CountCapitalLetters(string input)
-// {
-//     int count = 0;
-// return null;
+int CountCapitalLetters(string input)
+{
+   {
+    int count = 0;
+    foreach (var c in input)
+    {
+      if (char.IsUpper(c)) count++;
+    }
+    return count;
+  }
 
-// }
+}
 
 /* 3. Distinct alphabetical list
 
