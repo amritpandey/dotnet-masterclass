@@ -108,17 +108,24 @@ Make a GET endpoint that takes a string as input and returns a new list containi
 sorted in alphabetical order. For example, if the input string is The cool breeze 
 whispered through the trees, the output should be ["b", "c", "d", "e", "h", "i", "l", "o", "p", "r", "s", "t", "u", "w", "z"].
 */
-// app.MapGet("/distalphabet", (string input)=>{
-//     var result = new List<char>();
-//     foreach (var c in input)
-//     {
-//         if(char.IsLetter(c))
-//         {
-//             result.Add(c);
-//         }
-//         result.Sort();
-//         return Results.Ok(result);
-//     }
-// });
+app.MapGet("/dist-alphabet", (string input)=>{
+    var result = new List<char>();
+    List<char> newList = new List<char>();
+
+    foreach (var c in input)
+    {
+        if(char.IsLetter(c))
+        {
+
+            result.Add(c);
+        }
+        
+       newList = result.Distinct().ToList();
+                newList.Sort();
+            
+       
+    }
+     return Results.Ok(newList);
+});
 app.Run();
 
