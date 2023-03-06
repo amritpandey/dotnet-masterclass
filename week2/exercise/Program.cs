@@ -63,7 +63,8 @@ Example 1: GET /?input=153 would calculate 1 + 5 + 3 and return 9. Example 2: GE
 
 app.MapGet("/methods", (string input) => {
     var inputIsNumber = int.TryParse(input, out var parseInput);
-    if(inputIsNumber){
+    if(inputIsNumber)
+    {
        return Results.Ok(AddNumbers(parseInput));
     }else{
        return Results.Ok(CountCapitalLetters(input));
@@ -76,8 +77,6 @@ app.MapGet("/methods", (string input) => {
 int AddNumbers(int n)
 {
    
-//var digits = n.ToString().Select(t=>int.Parse(t.ToString())).ToArray();
-{
     int sum = 0;
     while (n > 0)
     {
@@ -85,8 +84,7 @@ int AddNumbers(int n)
       n = n / 10;//15
     }
     return sum;
-  }
-
+ 
 }
 
 int CountCapitalLetters(string input)
