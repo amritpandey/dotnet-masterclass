@@ -15,8 +15,8 @@ app.MapGet("/wfc", () =>
 {
 
 
-    string Word = "the quick brown fox jumps over the lazy dog";
-    var Value = Word.Split(' ');  // Split the string using 'Space' and stored it an var variable  
+    string word = "the quick brown fox jumps over the lazy dog";
+    var Value = word.Split(' ');  // Split the string using 'Space' and stored it an var variable  
     Dictionary<string, int> RepeatedWordCount = new Dictionary<string, int>();
     for (int i = 0; i < Value.Length; i++) //loop the splited string  
     {
