@@ -7,28 +7,34 @@ app.MapGet("/ctf", () =>
 {
     var temp = new Temperature(75);
     var result = temp.CelsiusToFarenheit();
-    System.Console.WriteLine($"{temp.Degrees} celsius is equal {result} Farenheit");
     var result1 = temp.FarenheitToCelsius();
-    System.Console.WriteLine($"{temp.Degrees} Farenheit is equal {result1} celsius");
+    return ($"{temp.Degrees} celsius is equal {result} Farenheit,{temp.Degrees} Farenheit is equal {result1} celsius" );
 });
 
-app.MapGet("/cc", () =>
+app.MapGet("/cc", (decimal amount, decimal rate) =>
 {
-    var amount = -100;
+    //var amount = -100;
     var exchangeRate = new ExchangeRate("EUR", "DKK");
-    exchangeRate.Rate = 7.5m;
-    Console.WriteLine($"{amount} {exchangeRate.FromCurrency} is {exchangeRate.Calculate(amount)} {exchangeRate.ToCurrency}");
+    exchangeRate.Rate = rate;
+    return ($"{amount} {exchangeRate.FromCurrency} is {exchangeRate.Calculate(amount)} {exchangeRate.ToCurrency}");
 });
 
-app.MapGet("/interface", () =>
-{
-    var cow = new Cow();
-    cow.MakeSound();
-    var dog = new Dog();
-    dog.MakeSound();
-    var cat = new Cat();
-    cat.MakeSound();
-});
+// app.MapGet("/interface", () =>
+// {
+    
+//     var cow = new Cow();
+//     return MakeSound(cow);
+//     // var dog = new Dog();
+//     // animal.MakeSound(dog);
+//     // var cat = new Cat();
+//     // animal.MakeSound(cat);
+
+// });
+//  string MakeSound(IAnimal animal)
+// {   
+//    // System.Console.WriteLine($"{animal.Name} says {animal.Sound}");
+//    return ($"{animal.Name} says {animal.Sound}");
+// }
 
 app.MapGet("/acc", () =>
 {
@@ -37,10 +43,12 @@ app.MapGet("/acc", () =>
     Console.WriteLine($"Account balance is {account.Balance}");
     account.Withdraw(20);
     Console.WriteLine($"Account balance is {account.Balance}");
-    account.Withdraw(100);
+    account.Withdraw(50);
     Console.WriteLine($"Account balance is {account.Balance}");
 
 });
+
+
 app.Run();
 
 /*
@@ -65,9 +73,9 @@ public class Temperature
         get => _degrees;
         private set
         {
-            if (value < 73.15m)
+            if (value < -273.15m)
             {
-                throw new Exception("Ouch! It cannot be less than 73.15");
+                throw new Exception("Ouch! It cannot be less than -273.15");
             }
             _degrees = value;
         }
@@ -126,42 +134,29 @@ Create classes Cow, Cat and Dog that implement IAnimal .
 Instantiate all three classes and pass them to a new method called MakeSound that has single parameter IAnimal 
 and it writes to console eg “Dog says woof woof” if instance of the Dog class is passed.
 */
-public interface IAnimal
-{
+// public interface IAnimal
+// {
+//     string Name { get; }
+//     string Sound { get; }
+// }
+// public class Cow : IAnimal
+// {
+//     public string Name { get => "Cow"; }
+//     public string Sound { get => "Moo moo"; }
+// }
 
-    string Name { get; }
-    string Sound { get; }
-    void MakeSound();
+// public class Cat : IAnimal
+// {
+//     public string Name { get => "Cat"; }
+//     public string Sound { get => "Meow meow"; }
+// }
+// public class Dog : IAnimal
+// {
+//     public string Name { get => "Dog"; }
+//     public string Sound { get => "Bhau bhau"; }
+// }
 
-}
-public class Cow : IAnimal
-{
-    public string Name { get => "Cow"; }
-    public string Sound { get => "Moo moo"; }
-    public void MakeSound()
-    {
-        System.Console.WriteLine($"{Name} says {Sound}");
-    }
-}
-
-public class Cat : IAnimal
-{
-    public string Name { get => "Cat"; }
-    public string Sound { get => "Meow meow"; }
-    public void MakeSound()
-    {
-        System.Console.WriteLine($"{Name} says {Sound}");
-    }
-}
-public class Dog : IAnimal
-{
-    public string Name { get => "Dog"; }
-    public string Sound { get => "Bhau bhau"; }
-    public void MakeSound()
-    {
-        System.Console.WriteLine($"{Name} says {Sound}");
-    }
-}
+ 
 
 /*
 Create Account class that can be initialized with the amount value. 
@@ -177,11 +172,11 @@ account.Withdraw(200); // ❌ we should not be able to withdraw more than we hav
 public class Account
 {
     private double _balance;
-    public double Amount { get; set; }
+    //public double Amount { get; set; }
     public double Balance { get=>_balance; }
-  public Account(double amount)
+  public Account(double balance)
   {
-    this.Amount=amount;
+    _balance=balance;
   }  
   public double Withdraw(double withdrawAmount)
   {
@@ -189,11 +184,11 @@ public class Account
     {
         throw new Exception("Withdraw amount exceed current balance");
     }
-    return this._balance=this._balance-withdrawAmount;
+    return this._balance-=withdrawAmount;
   }
   public double Deposit(double depositAmount)
   {
-   return this._balance=this._balance+depositAmount;
+   return this._balance+=depositAmount;
     
   }
 }
