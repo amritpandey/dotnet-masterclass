@@ -79,6 +79,41 @@ app.MapPost("/retrieveProducts", async (UserId ids) =>
         return Results.Ok(productList); 
 });
 
+/*
+A GET endpoint that gets a user based on an id
+*/
+app.MapGet("/userById", async (int id) =>
+{
+    var httpClient = new HttpClient();
+  
+            var response= await httpClient.GetAsync($"https://dummyjson.com/users/{id}");
+            var data = await response.Content.ReadFromJsonAsync<User>();
+            System.Console.WriteLine(data);
+        return Results.Ok(data); 
+});
+/*
+A PUT endpoint that updates a user based on an id and the body of the request
+*/
+app.MapPut("/updateById", async (User userBody, int id) =>
+{
+    var httpClient = new HttpClient();
+  
+            var response= await httpClient.PutAsJsonAsync($"https://dummyjson.com/users/{id}",userBody);
+            var data = await response.Content.ReadFromJsonAsync<User>();
+            System.Console.WriteLine(data);
+        return Results.Ok(data); 
+});
+/*
+A DELETE endpoint that deletes a user based on an id*/
+app.MapDelete("/deleteById", async (int id) =>
+{
+    var httpClient = new HttpClient();
+  
+            var response= await httpClient.DeleteAsync($"https://dummyjson.com/users/{id}");
+            var data = await response.Content.ReadFromJsonAsync<User>();
+            System.Console.WriteLine(data);
+        return Results.Ok(data); 
+});
 
 app.Run();
 
