@@ -13,13 +13,13 @@ app.MapPost("/create", async (User userData) =>
         ;
         System.Console.WriteLine(response);
         var data = await response.Content.ReadFromJsonAsync<User>();
-        var responseData = new
-        {
-            StatusCode = response.StatusCode,
-            ReasonPhrase = response.ReasonPhrase,
-            data
+        var responseData = new ResolveData(response.StatusCode,response.ReasonPhrase,response.Data);
+        // {
+        //     StatusCode = response.StatusCode,
+        //     ReasonPhrase = response.ReasonPhrase,
+        //     data
 
-        };
+        // };
         return (responseData);
 });
 /*
@@ -33,13 +33,13 @@ app.MapPost("/createProduct", async (Product productData) =>
         ;
         System.Console.WriteLine(response);
         var data = await response.Content.ReadFromJsonAsync<Product>();
-        var responseData = new
-        {
-            StatusCode = response.StatusCode,
-            ReasonPhrase = response.ReasonPhrase,
-            data
 
-        };
+        // var responseData = new
+        // {
+        //     StatusCode = response.StatusCode,
+        //     ReasonPhrase = response.ReasonPhrase,
+        //     data
+        // };
         return (responseData);
 });
 /*
@@ -121,3 +121,18 @@ record User(string FirstName, string LastName, int Age);
 record Product(string Title, decimal Price);
 record UserId(List<int>Id );
 record Product1(int Id, string Title, int Price);
+
+public class ResolveData
+{
+    public System.Net.HttpStatusCode StatusCode { get; set; }
+    public System.Net.Http.HttpResponseMessage ReasonPhrase { get; set; }
+    public HttpResponseMessage Data { get; set; }
+    
+    public ResolveData(System.Net.HttpStatusCode statusCode, System.Net.Http.HttpResponseMessage reasonPhrase, HttpResponseMessage data)
+    {
+       StatusCode= statusCode;
+       ReasonPhrase=reasonPhrase;
+       Data=data;
+
+    } 
+}
