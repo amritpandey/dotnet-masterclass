@@ -6,6 +6,7 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World csharp!");
 
+//example to check whether the input is integer or not
 app.MapPost("/product/{_id}",(string _id)=>
 {
     if(int.TryParse(_id, out int id))
@@ -48,30 +49,30 @@ app.MapGet("/users2", async (IConfiguration configuration) =>
     using var connection = new MySqlConnection(configuration.GetConnectionString("Default"));
 
     var users = await connection.QueryAsync<User>("SELECT * FROM mysql.user");
-    return users;
+    return Results.Ok(users);
 });
 
 app.MapGet("/products", async (IConfiguration configuration) =>
 {
     using var connection = new MySqlConnection(configuration.GetConnectionString("Default"));
     var products = await connection.QueryAsync<Product>("SELECT id, name, price FROM dapper.products");
-    return products;
+    return Results.Ok(products);
 });
 
 app.MapGet("/products/{id}", async (IConfiguration configuration, int id) =>
 {
     if(Int32.IsNegative(id)){
-        throw new Exception("Id can't be negative");
+
+        return Results.BadRequest("Id can't be negative");
     }
     using var connection = new MySqlConnection(configuration.GetConnectionString("Default"));
     var products = await connection.QueryAsync<Product>($"SELECT id, name, price FROM dapper.products where id={id}");
     if(products.Count()==0)
     {
-        throw new Exception("No record found in database!!!");
-        // return results.badrequests();
+         return Results.BadRequest("No record found in database!!!");
         // QuerySingleAsync to get the single product.
     }
-    return products;
+    return Results.Ok(products);
 });
 
 app.MapPost("/products", async (IConfiguration configuration, Product product) =>
@@ -79,6 +80,10 @@ app.MapPost("/products", async (IConfiguration configuration, Product product) =
     if(string.IsNullOrEmpty(product.Name))
     {
         return Results.BadRequest("empty");
+    }
+    if(product.Price.Equals(null))
+    {
+        return Results.BadRequest("Empty price");
     }
     await using var connection = new MySqlConnection(configuration.GetConnectionString("Default"));
     var productId = await connection.ExecuteAsync("INSERT INTO dapper.products (name, price) VALUES (@name, @price)", product);
@@ -109,9 +114,6 @@ app.MapDelete("/product/{id}", async (IConfiguration configuration, int id) =>
 
 app.MapGet("/productJoin/{id}", async (IConfiguration configuration, int id) =>
 {
-    // if(Int32.IsNegative(id)){
-    //     throw new Exception("Id can't be negative");
-    // }
     using var connection = new MySqlConnection(configuration.GetConnectionString("Default"));
     // var products = await connection.QueryAsync<Product>($"SELECT id, name, price FROM dapper.products where id={id}");
     // var sales = await connection.QueryAsync<Sale>($"SELECT id, sale_person, sale_date FROM dapper.sales where id={id}");
