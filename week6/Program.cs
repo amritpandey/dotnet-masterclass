@@ -66,13 +66,21 @@ app.MapGet("/products/{id}", async (IConfiguration configuration, int id) =>
         return Results.BadRequest("Id can't be negative");
     }
     using var connection = new MySqlConnection(configuration.GetConnectionString("Default"));
-    var products = await connection.QueryAsync<Product>($"SELECT id, name, price FROM dapper.products where id={id}");
+    try
+    {
+        var products = await connection.QueryAsync<Product>($"SELECT id, name, price FROM dapper.products where id={id}");
     if(products.Count()==0)
     {
          return Results.BadRequest("No record found in database!!!");
-        // QuerySingleAsync to get the single product.
     }
-    return Results.Ok(products);
+    return Results.Ok(products); 
+    }
+    catch (System.Exception)
+    {
+        
+        return Results.NotFound();
+    }
+   
 });
 
 app.MapPost("/products", async (IConfiguration configuration, Product product) =>
