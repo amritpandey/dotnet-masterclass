@@ -3,7 +3,9 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+
 app.MapGet("/", () => "Hello dkkfkgjkffudsfjckingWorld!");
+
 /*
 1. Caclulator
 
@@ -21,6 +23,7 @@ app.MapGet("/calculator", (string numberOne, string numberTwo, string operation)
 
     if (!numberOneIsValid || !numberTwoIsValid)
     {
+
         return Results.BadRequest("One of the numbers is not valid");
     }
 
@@ -40,9 +43,8 @@ app.MapGet("/calculator", (string numberOne, string numberTwo, string operation)
             break;
         default:
             return Results.BadRequest("Not valid operator!!!");
-    }
 
-    //Console.WriteLine(result);
+    }
     return Results.Ok(result);
 });
 
@@ -68,20 +70,18 @@ app.MapGet("/methods", (string input) =>
     else
     {
         return Results.Ok(CountCapitalLetters(input));
+
     }
 
 });
 
-
-
 int AddNumbers(int n)
 {
-
     int sum = 0;
     while (n > 0)
     {
-        sum = sum + n % 10;
-        n = n / 10;
+        sum = sum + n % 10;//153%10=3,5
+        n = n / 10;//15
     }
     return sum;
 
@@ -89,6 +89,7 @@ int AddNumbers(int n)
 
 int CountCapitalLetters(string input)
 {
+
     {
         int count = 0;
         foreach (var c in input)
@@ -105,7 +106,7 @@ int CountCapitalLetters(string input)
 Make a GET endpoint that takes a string as input and returns a new list containing only the unique characters, 
 sorted in alphabetical order. For example, if the input string is The cool breeze 
 whispered through the trees, the output should be ["b", "c", "d", "e", "h", "i", "l", "o", "p", "r", "s", "t", "u", "w", "z"].
-*/
+
 app.MapGet("/dist-alphabet", () =>
 {
     string inputText = "The cool breeze whispered through the trees";
