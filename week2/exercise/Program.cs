@@ -44,8 +44,7 @@ app.MapGet("/calculator", (string numberOne, string numberTwo, string operation)
         default:
             return Results.BadRequest("Not valid operator!!!");
 
-    }   
- 
+    }
     return Results.Ok(result);
 });
 
@@ -85,6 +84,7 @@ int AddNumbers(int n)
         n = n / 10;//15
     }
     return sum;
+
 }
 
 int CountCapitalLetters(string input)
@@ -106,7 +106,6 @@ int CountCapitalLetters(string input)
 Make a GET endpoint that takes a string as input and returns a new list containing only the unique characters, 
 sorted in alphabetical order. For example, if the input string is The cool breeze 
 whispered through the trees, the output should be ["b", "c", "d", "e", "h", "i", "l", "o", "p", "r", "s", "t", "u", "w", "z"].
-*
 
 app.MapGet("/dist-alphabet", () =>
 {
