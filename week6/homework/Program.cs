@@ -17,12 +17,12 @@ app.MapGet("/users", async (IUserRepository userRepository) =>
 
 app.MapPost("/users", async (IUserRepository userRepository, User user) =>
 {
-    return await userRepository.PostUser(user);
+    return await userRepository.CreateUser(user);
 });
 
 app.MapPut("/users", async (IUserRepository userRepository, User user) =>
 {
-    return await userRepository.PutUser(user);
+    return await userRepository.UpdateUser(user);
 });
 
 app.MapDelete("/users/{id}", async (IUserRepository userRepository, int id) =>
@@ -38,12 +38,12 @@ app.MapGet("/products", async (IProductRepository productRepository) =>
 
 app.MapPost("/products", async (IProductRepository productRepository, Product product) =>
 {
-    return await productRepository.PostProduct(product);
+    return await productRepository.CreateProduct(product);
 });
 
 app.MapPut("/products", async (IProductRepository productRepository, Product product) =>
 {
-    return await productRepository.PutProduct(product);
+    return await productRepository.UpdateProduct(product);
 });
 
 app.MapDelete("/products/{id}", async (IProductRepository productRepository, int id) =>

@@ -6,8 +6,8 @@ namespace HackYourFuture.Week6
     public interface IProductRepository
     {
         Task<IEnumerable<Product>> GetProducts();
-        Task<Product> PostProduct(Product productPost);
-        Task<Product> PutProduct(Product product);
+        Task<Product> CreateProduct(Product productPost);
+        Task<Product> UpdateProduct(Product product);
         Task<int> DeleteProduct(int id);
     }
 
@@ -27,7 +27,7 @@ namespace HackYourFuture.Week6
             return products;
         }
 
-        public async Task<Product> PostProduct(Product product)
+        public async Task<Product> CreateProduct(Product product)
         {
             using var connection = new MySqlConnection(connectionString);
             var products = await connection.ExecuteAsync("INSERT INTO products (name, price) VALUES (@name, @price)", product);

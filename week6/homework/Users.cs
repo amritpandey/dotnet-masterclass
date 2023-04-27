@@ -7,8 +7,8 @@ namespace HackYourFuture.Week6
     public interface IUserRepository
     {
         Task<IEnumerable<User>> GetUsers();
-        Task<User> PostUser(User userPost);
-        Task<User> PutUser(User user);
+        Task<User> CreateUser(User userPost);
+        Task<User> UpdateUser(User user);
         Task<int> DeleteUser(int id);
     }
 
